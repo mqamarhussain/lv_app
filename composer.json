@@ -10,13 +10,10 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
-<<<<<<< HEAD
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
+        "livewire/livewire": "^2.8",
         "spatie/laravel-permission": "^5.4"
-=======
-        "laravel/tinker": "^2.5"
->>>>>>> 9c215162c0aff1983574b98123acfeb57971b257
     },
     "require-dev": {
         "facade/ignition": "^2.5",
