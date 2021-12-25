@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
 <div class="container">
@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('login') }}" data-turbo="false">
                         @csrf
 
                         <div class="row mb-3">
@@ -62,6 +62,7 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                                <a href="{{ route('register') }}">{{ __('Register') }}</a>
                             </div>
                         </div>
                     </form>

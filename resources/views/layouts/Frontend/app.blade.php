@@ -16,7 +16,7 @@
     <script type="text/javascript">
         var asset_url = "{{asset('Frontend')}}";
     </script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ mix('turbo/turbo.js') }}" defer></script>
     @livewireStyles
 </head>
 
@@ -91,13 +91,13 @@
                     @guest
                         @if (Route::has('login'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" data-turbo="false" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                         @endif
 
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" data-turbo="false" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @endif
                     @else
