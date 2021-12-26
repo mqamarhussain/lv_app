@@ -22,10 +22,17 @@ class PostsDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addColumn('action', function($data){
-                $edit_route = route('admin.posts.edit',$data->id);
                 $delete_route = route('admin.posts.destroy',$data->id);
+                $delete_form = "<form class=\" show_confirm d-inline\"  data-turbo=\"false\" method=\"POST\" action=\" ".$delete_route." \"> ".
+                               csrf_field() ."
+                               <input name=\"_method\" type=\"hidden\" value=\"DELETE\">
+                               <button type=\"submit\" class=\"btn btn-sm btn-danger btn-flat show_confirm\" data-toggle=\"tooltip\" title='Delete'><span class='fa fa-trash show_confirm'></span></button>
+                           </form>";
+
+                $edit_route = route('admin.posts.edit',$data->id);
                 $action = "<a href=".$edit_route."><button class='btn btn-info btn-sm'><span class='fa fa-edit'></span></button></a>";
-                $action .= "<a href=".$delete_route."><button class='btn btn-danger btn-sm'><span class='fa fa-trash'></span></button></a>";
+                // $action .= "<a href=".$delete_route."><button class='btn btn-danger btn-sm'><span class='fa fa-trash'></span></button></a>";
+                $action .= $delete_form;
                 return $action;
             })->addColumn('show',function($data){
                 return "";
@@ -84,7 +91,7 @@ class PostsDataTable extends DataTable
                     ->exportable(false)
                     ->printable(false)
                     ->width(100)
-                    ->addClass('text-center'),
+                    ->addClass('text-center action'),
             
         ];
     }

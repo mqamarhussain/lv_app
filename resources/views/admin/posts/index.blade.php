@@ -2,7 +2,6 @@
 @push('css')
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-    {{-- <link href="https://coreui.io/demo/4.0/vendors/datatables.net-bs4/css/dataTables.bootstrap4.css"> --}}
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <link href="https://datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
@@ -19,7 +18,7 @@
 	<div class="col-12">
 		<div class="card">
 			<div  class="card-title p-2">
-				<h4>{{__('Posts')}}</h4>
+				<h4 class="show_confirm">{{__('Posts')}}</h4>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive-sm">
@@ -70,5 +69,46 @@
 	});
 </script>
 
+<script type="text/javascript">
+
+$(function () {
+	
+
+   $('#posts-table tbody').on('submit', 'td.action form.show_confirm', function (event) {
+     event.preventDefault();
+     var form = $(this);
+     console.log(form.serialize());
+     Swal.fire({
+		  title: 'Are you sure?',
+		  text: "You won't be able to revert this!",
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+		  if (result.isConfirmed) {
+		  	    var url = form.attr('action'); //get submit url [replace url here if desired]
+		  	    console.log(url);
+		  	    $.ajax({
+		  	         type: "POST",
+		  	         url: url,
+		  	         data: form.serialize(), // serializes form input
+		  	         success: function(data){
+		  	             Swal.fire(
+		  	               data.title,
+		  	               data.message,
+		  	               data.icon
+		  	             )
+		  	             window.LaravelDataTables["posts-table"].ajax.reload();
+		  	         }
+		  	    });
+		  }
+		});
+
+
+   });
+   });
+</script>
 @endpush
 @stop
